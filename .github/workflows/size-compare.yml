@@ -1,0 +1,43 @@
+name: SizeCompare CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+  workflow_dispatch:
+
+
+jobs:
+  check-size:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v3
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: false
+
+      - name: 🐧 Use Node.js v18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: v18.x
+          cache: 'pnpm'
+
+      - name: 🔍 Install dependencies
+        run: pnpm install
+
+      - name: 🔧 Build package
+        run: pnpm build
+
+      - name: 🚛 Size compare
+        uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            dist/**

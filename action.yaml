@@ -1,0 +1,15 @@
+name: "Size Branch Compare"
+description: "Compare branch size of the built assets"
+branding:
+    icon: bar-chart-2
+    color: gray-dark
+
+inputs:
+    github-token:
+        description: GitHub token to use for API calls
+        required: true
+    files:
+        description: A glob pattern where to find bundle files compare size for
+runs:
+    using: "node16"
+    main: "dist/index.js"
