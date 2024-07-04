@@ -10,6 +10,11 @@ inputs:
         required: true
     files:
         description: A glob pattern where to find bundle files compare size for
+        default: "dist/**/*"
+    match:
+        description: A regex pattern to match the files to compare
+        default: ".*"
+
 runs:
     using: "node16"
     main: "dist/index.js"
